@@ -33,10 +33,16 @@ def lambda_handler(event, context):
 
     #     raise e
 
-    return {
+    res = {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",  # ここを適切なオリジンに設定
+            "Access-Control-Allow-Methods": "GET,OPTIONS",  # 許可するメソッドを設定
+            "Access-Control-Allow-Headers": "Content-Type"  # 許可するヘッダーを設定
+        },
         "body": json.dumps({
-            "message": "my get",
+            "message": "get api",
             # "location": ip.text.replace("\n", "")
         }),
     }
+    return res

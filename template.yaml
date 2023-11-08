@@ -25,6 +25,8 @@ Resources:
           Properties:
             Path: /myget
             Method: get
+            RestApiId:
+              Ref: MyApi
 
   MyPostFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -40,6 +42,19 @@ Resources:
           Properties:
             Path: /mypost
             Method: post
+            RestApiId:
+              Ref: MyApi
+
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowOrigin: "'*'"
+        # AllowCredentials: true
+        AllowMethods: "'OPTIONS,GET,POST'"
+        # AllowMethods: "'OPTIONS'"
+        AllowHeaders: "'Content-Type'"
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
