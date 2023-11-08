@@ -5,6 +5,12 @@ Description: >
 
   Sample SAM Template for apitest-app
 
+Parameters:
+  UserName:
+    Type: String
+  UserType:
+    Type: Number
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -27,6 +33,10 @@ Resources:
             Method: get
             RestApiId:
               Ref: MyApi
+      Environment:
+        Variables:
+          UserName: !Ref UserName
+          UserType: !Ref UserType
       Layers:
         - !Ref MyLayer
 
@@ -46,6 +56,10 @@ Resources:
             Method: post
             RestApiId:
               Ref: MyApi
+      Environment:
+        Variables:
+          UserName: !Ref UserName
+          UserType: !Ref UserType
       Layers:
         - !Ref MyLayer
 

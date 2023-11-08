@@ -1,3 +1,4 @@
+import os
 import json
 from db_info import DBInfo
 # import requests
@@ -43,6 +44,8 @@ def lambda_handler(event, context):
         },
         "body": json.dumps({
             "message": "get api(host:{}/port:{}/)".format(dbinfo.connections['host'], dbinfo.connections['port']),
+            "UserName": os.environ.get('UserName', "UserNameError"),
+            "UserType": os.environ.get('UserType', 9999),
             # "location": ip.text.replace("\n", "")
         }),
     }

@@ -5,6 +5,10 @@ version = 0.1
 [default]
 [default.global.parameters]
 stack_name = "apitest-app"
+parameter_overrides = [
+  "UserName=testman",
+  "UserType=1111",
+]
 
 [default.build.parameters]
 cached = true
