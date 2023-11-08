@@ -41,6 +41,21 @@ Resources:
             Path: /myget
             Method: get
 
+  MyPostFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: my_post_function/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Events:
+        MyGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /mypost
+            Method: post
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -65,3 +80,12 @@ Outputs:
     Description: "Implicit IAM Role created for My Get function"
     Value: !GetAtt MyGetFunctionRole.Arn
 
+  MyPostApi:
+    Description: "API Gateway endpoint URL for Prod stage for my post function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/mypost/"
+  MyGetFunction:
+    Description: "My Post Lambda Function ARN"
+    Value: !GetAtt MyPostFunction.Arn
+  MyGetFunctionIamRole:
+    Description: "Implicit IAM Role created for My Post function"
+    Value: !GetAtt MyPostFunctionRole.Arn
