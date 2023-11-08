@@ -26,6 +26,21 @@ Resources:
             Path: /hello
             Method: get
 
+  MyGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: my_get_function/
+      Handler: app.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Events:
+        MyGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /myget
+            Method: get
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -39,3 +54,14 @@ Outputs:
   HelloWorldFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt HelloWorldFunctionRole.Arn
+
+  MyGetApi:
+    Description: "API Gateway endpoint URL for Prod stage for my get function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/myget/"
+  MyGetFunction:
+    Description: "My Get Lambda Function ARN"
+    Value: !GetAtt MyGetFunction.Arn
+  MyGetFunctionIamRole:
+    Description: "Implicit IAM Role created for My Get function"
+    Value: !GetAtt MyGetFunctionRole.Arn
+
