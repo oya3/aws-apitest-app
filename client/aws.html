@@ -11,6 +11,10 @@
   </head>
   <body>
     <h1>aws</h1>
+    <div>
+      <label for="requestUrlInput" class="form-label">request url</label>
+      <input type="text" class="form-control" id="requestUrlInput" placeholder="https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod">
+    </div>
     <button type="button" class="btn btn-primary" onclick="GetSimpleRequest()">GET単純リクエスト</button>
     <button type="button" class="btn btn-primary" onclick="GetNonSimpleRequest()">GET非単純リクエスト</button>
     <br>
@@ -18,11 +22,20 @@
     <button type="button" class="btn btn-warning" onclick="PostNonSimpleRequest()">POST非単純リクエスト</button>
 
     <script>
+    let request_url = 'https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod'
+     // input要素を取得
+     var inputElement = document.getElementById("requestUrlInput");
+     inputElement.value = request_url
+     // input要素の値が変化したときのイベントリスナーを設定
+     inputElement.addEventListener("change", function() {
+         // グローバル変数に新しい値を代入
+         request_url = this.value;
+     });
     // GET 単純リクエスト
     function GetSimpleRequest() {
         axios({
             method: 'get',
-            url: 'https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod/myget',
+            url: `${request_url}/myget`,
             headers: {
                 'Content-Type': 'text/plain'
             },
@@ -38,7 +51,7 @@
     function GetNonSimpleRequest() {
         axios({
             method: 'get',
-            url: 'https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod/myget',
+            url: `${request_url}/myget`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -58,7 +71,7 @@
     function PostSimpleRequest() {
         axios({
             method: 'post',
-            url: 'https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod/mypost',
+            url: `${request_url}/mypost`,
             headers: {
                 'Content-Type': 'text/plain'
             },
@@ -76,7 +89,7 @@
     function PostNonSimpleRequest() {
         axios({
             method: 'post',
-            url: 'https://3k3wg0s3w4.execute-api.ap-northeast-1.amazonaws.com/Prod/mypost',
+            url: `${request_url}/mypost`,
             headers: {
                 'Content-Type': 'application/json'
             },
