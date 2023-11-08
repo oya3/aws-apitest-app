@@ -1,5 +1,5 @@
 import json
-
+from db_info import DBInfo
 # import requests
 
 
@@ -32,6 +32,7 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
+    dbinfo = DBInfo()
 
     res = {
         "statusCode": 200,
@@ -41,7 +42,7 @@ def lambda_handler(event, context):
             "Access-Control-Allow-Headers": "Content-Type"  # 許可するヘッダーを設定
         },
         "body": json.dumps({
-            "message": "post api",
+            "message": "post api(host:{}/port:{}/)".format(dbinfo.connections['host'], dbinfo.connections['port']),
             # "location": ip.text.replace("\n", "")
         }),
     }

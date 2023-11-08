@@ -27,6 +27,8 @@ Resources:
             Method: get
             RestApiId:
               Ref: MyApi
+      Layers:
+        - !Ref MyLayer
 
   MyPostFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -44,6 +46,19 @@ Resources:
             Method: post
             RestApiId:
               Ref: MyApi
+      Layers:
+        - !Ref MyLayer
+
+  MyLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: my_layer
+      Description: My layer description
+      ContentUri: my_layer/
+      CompatibleRuntimes:
+        - python3.11
+    Metadata:
+      BuildMethod: python3.11
 
   MyApi:
     Type: AWS::Serverless::Api
